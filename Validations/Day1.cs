@@ -1,9 +1,10 @@
 using NUnit.Framework;
 using FluentAssertions;
+using Days;
 
 namespace Validations;
 
-public class Tests
+public class Day1Validations
 {
     private string testInput = @"199
 200
