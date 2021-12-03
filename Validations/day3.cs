@@ -28,12 +28,24 @@ public class Day3Validations {
     [Test]
     public void ValidatePart2() {
         var day = new Day3(testInput);
-        day.Part1().Should().Be(230);
+        day.Part2().Should().Be(230);
     }
 
     [Test]
     public void ValidateFindMostCommon() {
         var day = new Day3(testInput);
-        day.FindMostCommon().Should().BeEquivalentTo(new List<int>{1,0,1,1,0});
+        day.FindMostCommon(day.ParseInput(testInput)).Should().BeEquivalentTo(new List<int>{1,-1,1,1,-1});
+    }
+
+    [Test]
+    public void ValidateFindSingleMostCommon() {
+        var day = new Day3(testInput);
+        day.FindSingleMostCommon(day.ParseInput(testInput)).Should().BeEquivalentTo(new List<string>{"10111"});
+    }
+
+    [Test]
+    public void ValidateFindSingleLeastCommon() {
+        var day = new Day3(testInput);
+        day.FindSingleLeastCommon(day.ParseInput(testInput)).Should().BeEquivalentTo(new List<string>{"01010"});
     }
 }
