@@ -21,10 +21,10 @@ jobs:
       run: dotnet restore Validations/Validations.csproj
     - name: Test
       run: dotnet test --logger trx --results-directory "TestResults" Validations/Validations.csproj
-      - name: Upload dotnet test results
-        uses: actions/upload-artifact@v2
-        with:
-          name: dotnet-results
-          path: TestResults
-        if: ${{ always() }}
+    - name: Upload dotnet test results
+      uses: actions/upload-artifact@v2
+      with:
+        name: dotnet-results
+        path: TestResults
+      if: ${{ always() }}
 
