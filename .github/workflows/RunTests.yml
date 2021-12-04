@@ -1,4 +1,4 @@
-name: .NET
+name: ValidateExamples
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  Validate:
 
     runs-on: ubuntu-latest
 
@@ -19,7 +19,12 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore Validations/Validations.csproj
-    - name: Build
-      run: dotnet build --no-restore Validations/Validations.csproj
     - name: Test
-      run: dotnet test --no-build --verbosity normal Validations/Validations.csproj
+      run: dotnet test --logger trx --results-directory "TestResults" Validations/Validations.csproj
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: dotnet-results
+          path: TestResults
+        if: ${{ always() }}
+
