@@ -8,10 +8,10 @@ var days = new List<IDay>
     new Day4(LoadInputFile("day4.txt"))
 };
 
-foreach(var day in days) {
+Parallel.ForEach(days, (day) => {
     Console.WriteLine($"{day.GetType().Name}.Part1: {day.Part1()}");
     Console.WriteLine($"{day.GetType().Name}.Part2: {day.Part2()}");
-}
+});
 
 string LoadInputFile(string filename) {
     using (var streamReader = new StreamReader($"Inputs/{filename}")) {
