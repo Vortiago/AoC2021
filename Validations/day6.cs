@@ -3,9 +3,6 @@ namespace Validations;
 using NUnit.Framework;
 using FluentAssertions;
 using Days;
-using System.Collections.Generic;
-using System;
-using System.Linq;
 
 public class Day6Validations {
 
