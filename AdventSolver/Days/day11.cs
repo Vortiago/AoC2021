@@ -74,21 +74,28 @@ public class Day11 : IDay
         }
     }
 
+    public void Step()
+    {
+        this.StepOne();
+        while (this.flattenOctopuses.Any(octopus => octopus.Flashed))
+        {
+            this.Flashy();
+        }
+
+        foreach (var octo in this.flattenOctopuses)
+        {
+            if (octo.Energy >= 10)
+            {
+                octo.Energy = 0;
+            }
+        }
+    }
+
     public long Part1()
     {
         for (var step = 0; step < 100; step++)
         {
-            this.StepOne();
-            while (this.flattenOctopuses.Any(octopus => octopus.Flashed))
-            {
-                this.Flashy();
-            }
-
-            foreach(var octo in this.flattenOctopuses) {
-                if (octo.Energy >= 10) {
-                    octo.Energy = 0;
-                }
-            }
+            this.Step();
         }
 
         return this.flattenOctopuses.Sum(x => x.Flashes);
@@ -98,19 +105,10 @@ public class Day11 : IDay
     {
         for (var step = 1; step < 10000; step++)
         {
-            this.StepOne();
-            while (this.flattenOctopuses.Any(octopus => octopus.Flashed))
+            this.Step();
+
+            if (this.flattenOctopuses.All(x => x.Energy == 0))
             {
-                this.Flashy();
-            }
-
-            foreach(var octo in this.flattenOctopuses) {
-                if (octo.Energy >= 10) {
-                    octo.Energy = 0;
-                }
-            }
-
-            if (this.flattenOctopuses.All(x => x.Energy == 0)) {
                 return 100 + step;
             }
         }
