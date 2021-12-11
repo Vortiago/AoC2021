@@ -2,10 +2,9 @@ namespace Days;
 
 public class Day9 : IDay
 {
-    private string input;
     private List<HeightNumber> Numbers { get; set; } = new List<HeightNumber>();
 
-    private HeightNumber[,] radarArray;
+    private HeightNumber[,] radarArray = new HeightNumber[0,0];
 
     private Int64[,] array;
 
@@ -101,10 +100,10 @@ public class Day9 : IDay
         var left = number.Left;
         var right = number.Right;
         var below = number.Below;
-        basinSize += AggregateBasin(ref above);
-        basinSize += AggregateBasin(ref left);
-        basinSize += AggregateBasin(ref right);
-        basinSize += AggregateBasin(ref below);
+        if (above != null) basinSize += AggregateBasin(ref above);
+        if (left != null) basinSize += AggregateBasin(ref left);
+        if (right != null) basinSize += AggregateBasin(ref right);
+        if (below != null) basinSize += AggregateBasin(ref below);
         return basinSize;
     }
 
