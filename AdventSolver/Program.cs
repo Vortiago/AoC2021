@@ -11,6 +11,7 @@ var days = new List<IDay>
     new Day7(LoadInputFile("day7.txt")),
     new Day9(LoadInputFile("day9.txt")),
     new Day11(LoadInputFile("day11.txt")),
+    new Day12(LoadInputFile("day12.txt")),
 };
 
 Parallel.ForEach(days, (day) => {
