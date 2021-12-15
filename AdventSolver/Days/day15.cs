@@ -46,7 +46,6 @@ public class Day15 : IDay
                             Position = (row + (extRows * rowCount), col + (extCol * colCount)),
                         };
                         this.ExtendedMap[(row + (extRows * rowCount)), col + (extCol * colCount)] = mapPoint;
-                        this.flattenedExtendedMap.Add(mapPoint);
                     }
                 }
             }
@@ -72,12 +71,13 @@ public class Day15 : IDay
         return point;
     }
 
-    public void ProcessPoint(MapPoint current, MapPoint next)
+    public void ProcessPoint(MapPoint current, MapPoint next, bool extended = false)
     {
         if (!next.Visited)
         {
             var cost = current.Cost + next.Value;
             next.Cost = Math.Min(next.Cost, cost);
+            if (extended && ! this.flattenedExtendedMap.Contains(next)) this.flattenedExtendedMap.Add(next);
         }
     }
 
@@ -105,18 +105,19 @@ public class Day15 : IDay
     public long Part2()
     {
         this.ExtendedMap[0, 0].Cost = 0;
+        this.flattenedExtendedMap.Add(this.ExtendedMap[0,0]);
         while (this.flattenedExtendedMap.Any())
         {
             var currentPoint = this.flattenedExtendedMap.OrderBy(x => x.Cost).FirstOrDefault();
             if (currentPoint == null) break;
             var left = GetMapPoint(currentPoint.Position.row, currentPoint.Position.col - 1, true);
-            if (left != null) ProcessPoint(currentPoint, left);
+            if (left != null) ProcessPoint(currentPoint, left, true);
             var up = GetMapPoint(currentPoint.Position.row - 1, currentPoint.Position.col, true);
-            if (up != null) ProcessPoint(currentPoint, up);
+            if (up != null) ProcessPoint(currentPoint, up, true);
             var right = GetMapPoint(currentPoint.Position.row, currentPoint.Position.col + 1, true);
-            if (right != null) ProcessPoint(currentPoint, right);
+            if (right != null) ProcessPoint(currentPoint, right, true);
             var down = GetMapPoint(currentPoint.Position.row + 1, currentPoint.Position.col, true);
-            if (down != null) ProcessPoint(currentPoint, down);
+            if (down != null) ProcessPoint(currentPoint, down, true);
             currentPoint.Visited = true;
             this.flattenedExtendedMap.Remove(currentPoint);
         }
