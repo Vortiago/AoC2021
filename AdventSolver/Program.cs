@@ -1,4 +1,5 @@
-﻿using Days;
+﻿using System.Diagnostics;
+using Days;
 
 var days = new List<IDay>
 {
@@ -12,15 +13,27 @@ var days = new List<IDay>
     new Day9(LoadInputFile("day9.txt")),
     new Day11(LoadInputFile("day11.txt")),
     new Day12(LoadInputFile("day12.txt")),
+    new Day15(LoadInputFile("day15.txt")),
 };
 
-Parallel.ForEach(days, (day) => {
-    Console.WriteLine($"{day.GetType().Name}.Part1: {day.Part1()}");
-    Console.WriteLine($"{day.GetType().Name}.Part2: {day.Part2()}");
+Parallel.ForEach(days, (day) =>
+{
+    Stopwatch stopWatch = new Stopwatch();
+    stopWatch.Start();
+    var part1 = day.Part1();
+    stopWatch.Stop();
+    Console.WriteLine($"{day.GetType().Name}.Part1: {stopWatch.Elapsed.ToString()} {part1}");
+    stopWatch.Restart();
+    var part2 = day.Part2();
+    stopWatch.Stop();
+    Console.WriteLine($"{day.GetType().Name}.Part2: {stopWatch.Elapsed.ToString()} {part2}");
+   
 });
 
-string LoadInputFile(string filename) {
-    using (var streamReader = new StreamReader($"Inputs/{filename}")) {
+string LoadInputFile(string filename)
+{
+    using (var streamReader = new StreamReader($"Inputs/{filename}"))
+    {
         return streamReader.ReadToEnd();
     }
 }
